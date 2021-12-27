@@ -1,1 +1,22 @@
-$color: lightblue;
+// Colors
+$oxford_blue: #334253;
+$pale_sky: #67727E;
+$wisper: #F5F6FA;
+$athens_gray: #E9EBF0;
+$white: #FFFFFF;
+$blue_violet: #5357B6;
+$spindle: #C5C6EF;
+$burnt_sienna: #ED6368;
+$sundown: #FFB8BB;
+
+$cl-primary: $blue_violet;
+$cl-secondary: $oxford_blue;
+$cl-tertiary: $pale_sky;
+$cl-alert: $burnt_sienna;
+$cl-alert-lite: $sundown;
+$cl-highlight: $spindle ;
+$cl-accent: $wisper;
+$cl-bright: $white;
+
+// Font family
+$ff: 'Rubik', sans-serif;

@@ -1,0 +1,32 @@
+@use 'vars';
+
+// Reset
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+// Fonts
+.f-xlrg {
+    font-size: 2.4rem;
+    font-weight: 500;
+}
+
+.f-lrg {
+    font-size: 1.6rem;
+    font-weight: 500;
+}
+
+.f-med {
+    font-size: 1.6rem;
+    font-weight: 500;
+}
+
+.f-reg {
+    font-size: 1.6rem;
+    font-weight: 400;
+}
+
