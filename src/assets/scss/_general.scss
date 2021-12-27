@@ -30,3 +30,13 @@
     font-weight: 400;
 }
 
+body,
+html {
+    height: 100%;
+}
+
+body {
+    font-family: vars.$ff;
+    font-size: 62.5%;
+}
+
