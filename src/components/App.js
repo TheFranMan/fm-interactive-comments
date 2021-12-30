@@ -96,46 +96,46 @@ function App() {
     }
   }
 
-    const gethighestID = (comments) => {
-      let highest = 0
+  const gethighestID = (comments) => {
+    let highest = 0
 
-      for (let i = 0; i < comments.length; i++) {
-        let comment = comments[i]
+    for (let i = 0; i < comments.length; i++) {
+      let comment = comments[i]
 
-        if ( highest < comment.id ) {
-          highest = comment.id
-        }
-
-        if ( comment.replies && 0 < comment.replies.length ) {
-          let thisHighest = gethighestID(comment.replies)
-
-          if ( highest < thisHighest ) {
-            highest = thisHighest
-          }
-        }
+      if ( highest < comment.id ) {
+        highest = comment.id
       }
 
-      return highest
+      if ( comment.replies && 0 < comment.replies.length ) {
+        let thisHighest = gethighestID(comment.replies)
+
+        if ( highest < thisHighest ) {
+          highest = thisHighest
+        }
+      }
     }
 
-    // Retrieve comments from local storage if they are there, otherwise get from the data object
-    const memoizedSavedComments = useMemo(() => {
-      let localComments = localStorage.getItem('comments')
+    return highest
+  }
 
-      if ( localComments ) {
-        console.log('comments from local storage')
-        return JSON.parse(localComments)
-      }
+  // Retrieve comments from local storage if they are there, otherwise get from the data object
+  const memoizedSavedComments = useMemo(() => {
+    let localComments = localStorage.getItem('comments')
 
-      console.log('comments from data object')
-      return data.comments
-    }, [localStorage])
-    const [comments, dispatch] = useReducer(reducer, memoizedSavedComments)
+    if ( localComments ) {
+      console.log('comments from local storage')
+      return JSON.parse(localComments)
+    }
 
-    // Save the comments to localstorage when they are updated.
-    useEffect(() => {
-        localStorage.setItem('comments', JSON.stringify(comments))
-    }, [localStorage, comments])
+    console.log('comments from data object')
+    return data.comments
+  }, [localStorage])
+  const [comments, dispatch] = useReducer(reducer, memoizedSavedComments)
+
+  // Save the comments to localstorage when they are updated.
+  useEffect(() => {
+      localStorage.setItem('comments', JSON.stringify(comments))
+  }, [localStorage, comments])
 
     // const getComment = (comments, id) => {
     //   let length = comments.length
@@ -159,50 +159,31 @@ function App() {
     //   return null
     // }
 
-    console.log(comments)
+  console.log(comments)
 
-    // Store comments in state
-    // Delete, edit, and create actions on the comments
-    // Validate access perms on actions based on user
 
-    // Need ability to find comment in state
-    // Need ability to append new comment in the correct location
-    // Need ability to update comment score
+  const renderComments = (comments) => {
+    if ( 0 === comments.length ) {
+      return
+    }
 
     return (
-      <>
-      <section className="container" aria-labelledby="comment-heading">
-      <h1 id="comment-heading" className="sr-only">Interactive Comments</h1>
+      <ol>
+        { comments.map(comment => {
+          return <li key={comment.id}>{ comment.id } { comment.replies && renderComments(comment.replies) }</li>
+        })}
+      </ol>
+    )
+  }
 
-      { comments.length > 0 &&
-        <ol>
-          { comments.map(comment => {
-            return <li key={comment.id} >{ comment.id }
-            { comment.replies &&
-            <ol style={{listStyle: 'none', marginLeft: '2em'}}>
-              {
-              comment.replies.map(reply => {
-                return <li key={reply.id}>{ reply.id }
-                { reply.replies &&
-                <ol style={{listStyle: 'none', marginLeft: '2em'}}>
-                  {
-                  reply.replies.map(r => {
-                    return <li key={r.id}>{ r.id }</li>
-                  })
-                  }
-                </ol>
-                }
-                </li>
-              })
-              }
-            </ol>
-            }</li>
-          }) }
-        </ol>
-      }
+  return (
+    <>
+      <section className="container" aria-labelledby="comment-heading">
+        <h1 id="comment-heading" className="sr-only">Interactive Comments</h1>
+        {renderComments(comments)}
       </section>
 
-      <button onClick={ () => dispatch({type: "add", payload: {pid: 4}}) }>Add</button>
+      <button onClick={ () => dispatch({type: "add"}) }>Add</button>
     </>
   );
 }
