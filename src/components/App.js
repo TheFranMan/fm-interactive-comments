@@ -22,18 +22,6 @@ function App() {
 
   let localStorage = window.localStorage;
 
-  const retrieveComments = () => {
-    let localComments = localStorage.getItem('comments')
-
-    if ( localComments ) {
-      console.log('comments from local storage')
-      return JSON.parse(localComments)
-    }
-
-    console.log('comments from data object')
-    return data.comments
-  }
-
   const newComment = (id, content) => {
     return {...defaultComment, id: id, content: content}
   }
@@ -130,10 +118,21 @@ function App() {
       return highest
     }
 
-    const memoizedSavedComments = useMemo(() => retrieveComments(), [])
+    // Retrieve comments from local storage if they are there, otherwise get from the data object
+    const memoizedSavedComments = useMemo(() => {
+      let localComments = localStorage.getItem('comments')
+
+      if ( localComments ) {
+        console.log('comments from local storage')
+        return JSON.parse(localComments)
+      }
+
+      console.log('comments from data object')
+      return data.comments
+    }, [localStorage])
     const [comments, dispatch] = useReducer(reducer, memoizedSavedComments)
 
-
+    // Save the comments to localstorage when they are updated.
     useEffect(() => {
         localStorage.setItem('comments', JSON.stringify(comments))
     }, [localStorage, comments])
@@ -203,7 +202,7 @@ function App() {
       }
       </section>
 
-      <button onClick={ () => dispatch({type: "add"}) }>Add</button>
+      <button onClick={ () => dispatch({type: "add", payload: {pid: 4}}) }>Add</button>
     </>
   );
 }
