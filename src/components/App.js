@@ -2,6 +2,11 @@ import { useEffect, useMemo, useReducer } from 'react'
 import "../assets/scss/main.scss"
 import data from "../data.json"
 
+const ACTIONS = {
+  ADD: 'add',
+  REMOVE: 'remove'
+}
+
 function App() {
   const loggedInUser = {
     "image": {
@@ -63,9 +68,34 @@ function App() {
     return [ false, comments ]
   }
 
+  const removeComment = (comments, id) => {
+    let length = comments.length
+    for( let i = 0; i < length; i++){
+
+      // Found comment, remove it.
+      if ( id === comments[i].id ) {
+        let new_comments = JSON.parse(JSON.stringify(comments))
+        new_comments.splice(i, 1);
+        return [true, new_comments]
+      }
+
+      // Comment has replies, check them for the comment to delete
+      if ( comments[i].replies && 0 < comments[i].replies.length ) {
+        let [updated, new_replies] = removeComment(comments[i].replies, id)
+        if ( updated ) {
+          let new_comments = JSON.parse(JSON.stringify(comments))
+          new_comments[i].replies = new_replies
+          return [true, new_comments]
+        }
+      }
+    }
+
+    return [false, comments]
+  }
+
   const reducer = (comments, action) => {
     switch (action.type) {
-      case 'add':
+      case ACTIONS.add:
         let pid = null
         if ( action.payload && action.payload.pid ) {
           pid = action.payload.pid
@@ -91,6 +121,16 @@ function App() {
         // }
 
         return comments
+      case ACTIONS.REMOVE:
+
+        if ( !action.payload || !action.payload.id) {
+          return comments
+        }
+
+        let [removed, new_comments] = removeComment(comments, action.payload.id)
+        if ( removed ) {
+          return new_comments
+        }
       default:
         return comments
     }
@@ -183,7 +223,8 @@ function App() {
         {renderComments(comments)}
       </section>
 
-      <button onClick={ () => dispatch({type: "add"}) }>Add</button>
+      <button onClick={ () => dispatch({type: ACTIONS.ADD}) }>Add</button>
+      <button onClick={ () => dispatch({type: ACTIONS.REMOVE, payload: {id: 2}}) }>Remove</button>
     </>
   );
 }
