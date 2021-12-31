@@ -4,7 +4,8 @@ import data from "../data.json"
 
 const ACTIONS = {
   ADD: 'add',
-  REMOVE: 'remove'
+  REMOVE: 'remove',
+  UPDATE: 'update',
 }
 
 function App() {
@@ -93,6 +94,31 @@ function App() {
     return [false, comments]
   }
 
+  const updateComment = (comments, id, content) => {
+    let length = comments.length
+    for( let i = 0; i < length; i++){
+
+      // Found comment, update it's content.
+      if ( id === comments[i].id ) {
+        let new_comments = JSON.parse(JSON.stringify(comments))
+        new_comments[i].content = content
+        return [true, new_comments]
+      }
+
+      // Comment has replies, check them for the comment to update
+      if ( comments[i].replies && 0 < comments[i].replies.length ) {
+        let [updated, new_replies] = updateComment(comments[i].replies, id, content)
+        if ( updated ) {
+          let new_comments = JSON.parse(JSON.stringify(comments))
+          new_comments[i].replies = new_replies
+          return [true, new_comments]
+        }
+      }
+    }
+
+    return [false, comments]
+  }
+
   const reducer = (comments, action) => {
     switch (action.type) {
       case ACTIONS.ADD:
@@ -106,8 +132,8 @@ function App() {
         }
 
 
-        let [updated, updatedComments] = addComment(comments, pid, newComment(gethighestID(comments) + 1 , "New comment text"))
-        if ( updated ) {
+        let [added, updatedComments] = addComment(comments, pid, newComment(gethighestID(comments) + 1 , "New comment text"))
+        if ( added ) {
           return updatedComments
         }
         // let length = comments.length
@@ -122,7 +148,6 @@ function App() {
 
         return comments
       case ACTIONS.REMOVE:
-
         if ( !action.payload || !action.payload.id) {
           return comments
         }
@@ -131,6 +156,17 @@ function App() {
         if ( removed ) {
           return new_comments
         }
+        break
+      case ACTIONS.UPDATE:
+        if ( !action.payload || !action.payload.id || !action.payload.content ) {
+          return comments
+        }
+
+        let [updated, updated_comments] = updateComment(comments, action.payload.id, action.payload.content)
+        if ( updated ) {
+          return updated_comments
+        }
+        break
       default:
         return comments
     }
@@ -225,6 +261,7 @@ function App() {
 
       <button onClick={ () => dispatch({type: ACTIONS.ADD}) }>Add</button>
       <button onClick={ () => dispatch({type: ACTIONS.REMOVE, payload: {id: 2}}) }>Remove</button>
+      <button onClick={ () => dispatch({type: ACTIONS.UPDATE, payload: {id: 5, content: "updated content"}}) }>Updated</button>
     </>
   );
 }
