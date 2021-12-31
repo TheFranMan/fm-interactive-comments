@@ -6,6 +6,10 @@ const ACTIONS = {
   ADD: 'add',
   REMOVE: 'remove',
   UPDATE: 'update',
+  SCORE: {
+    INCREASE: 'score_increase',
+    DECREASE: 'score_decrease',
+  },
 }
 
 function App() {
@@ -119,6 +123,40 @@ function App() {
     return [false, comments]
   }
 
+  const updateScore = (comments, id, type) => {
+    let length = comments.length
+    for( let i = 0; i < length; i++){
+
+      // Found comment, update it's score.
+      if ( id === comments[i].id ) {
+        let new_score = comments[i].score
+        if (ACTIONS.SCORE.INCREASE === type) {
+          new_score += 1
+        }
+
+        if (ACTIONS.SCORE.DECREASE === type) {
+          new_score -= 1
+        }
+
+        let new_comments = JSON.parse(JSON.stringify(comments))
+        new_comments[i].score = new_score
+        return [true, new_comments]
+      }
+
+      // Comment has replies, check them for the comment to update
+      if ( comments[i].replies && 0 < comments[i].replies.length ) {
+        let [updated, new_replies] = updateScore(comments[i].replies, id, type)
+        if ( updated ) {
+          let new_comments = JSON.parse(JSON.stringify(comments))
+          new_comments[i].replies = new_replies
+          return [true, new_comments]
+        }
+      }
+    }
+
+    return [false, comments]
+  }
+
   const reducer = (comments, action) => {
     switch (action.type) {
       case ACTIONS.ADD:
@@ -160,6 +198,18 @@ function App() {
         }
 
         return comments
+        case ACTIONS.SCORE.INCREASE:
+        case ACTIONS.SCORE.DECREASE:
+          if ( !action.payload || !action.payload.id ) {
+            return comments
+          }
+
+          let [updated_score, updated_score_comments] = updateScore(comments, action.payload.id, action.type)
+          if ( updated_score ) {
+            return updated_score_comments
+          }
+
+          return comments
       default:
         return comments
     }
@@ -228,8 +278,6 @@ function App() {
     //   return null
     // }
 
-  console.log(comments)
-
 
   const renderComments = (comments) => {
     if ( 0 === comments.length ) {
@@ -255,6 +303,8 @@ function App() {
       <button onClick={ () => dispatch({type: ACTIONS.ADD, payload: {pid: 6}}) }>Add</button>
       <button onClick={ () => dispatch({type: ACTIONS.REMOVE, payload: {id: 2}}) }>Remove</button>
       <button onClick={ () => dispatch({type: ACTIONS.UPDATE, payload: {id: 8, content: "updated content"}}) }>Updated</button>
+      <button onClick={ () => dispatch({type: ACTIONS.SCORE.INCREASE, payload: {id: 8}}) }>Score +</button>
+      <button onClick={ () => dispatch({type: ACTIONS.SCORE.DECREASE, payload: {id: 8}}) }>Score -</button>
     </>
   );
 }
