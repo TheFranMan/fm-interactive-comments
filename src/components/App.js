@@ -95,7 +95,7 @@ function App() {
 
   const reducer = (comments, action) => {
     switch (action.type) {
-      case ACTIONS.add:
+      case ACTIONS.ADD:
         let pid = null
         if ( action.payload && action.payload.pid ) {
           pid = action.payload.pid
