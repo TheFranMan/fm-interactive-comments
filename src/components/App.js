@@ -136,15 +136,6 @@ function App() {
         if ( added ) {
           return updatedComments
         }
-        // let length = comments.length
-        // for (let i = 0; i < length; i++) {
-        //   if ( comments[i].id === pid ) {
-        //     let nextState = JSON.parse(JSON.stringify(comments))
-        //     nextState[i].replies = [...nextState[i].replies, newComment(gethighestID(comments) + 1, "New comment text")]
-
-        //     return nextState
-        //   }
-        // }
 
         return comments
       case ACTIONS.REMOVE:
@@ -156,7 +147,8 @@ function App() {
         if ( removed ) {
           return new_comments
         }
-        break
+
+        return comments
       case ACTIONS.UPDATE:
         if ( !action.payload || !action.payload.id || !action.payload.content ) {
           return comments
@@ -166,7 +158,8 @@ function App() {
         if ( updated ) {
           return updated_comments
         }
-        break
+
+        return comments
       default:
         return comments
     }
@@ -259,9 +252,9 @@ function App() {
         {renderComments(comments)}
       </section>
 
-      <button onClick={ () => dispatch({type: ACTIONS.ADD}) }>Add</button>
+      <button onClick={ () => dispatch({type: ACTIONS.ADD, payload: {pid: 6}}) }>Add</button>
       <button onClick={ () => dispatch({type: ACTIONS.REMOVE, payload: {id: 2}}) }>Remove</button>
-      <button onClick={ () => dispatch({type: ACTIONS.UPDATE, payload: {id: 5, content: "updated content"}}) }>Updated</button>
+      <button onClick={ () => dispatch({type: ACTIONS.UPDATE, payload: {id: 8, content: "updated content"}}) }>Updated</button>
     </>
   );
 }
