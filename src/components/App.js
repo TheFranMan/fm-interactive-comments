@@ -1,8 +1,12 @@
-import { useEffect, useMemo, useReducer } from 'react'
+import React, { useEffect, useMemo, useReducer } from 'react'
 import "../assets/scss/main.scss"
 import data from "../data.json"
+import Comments from "./comments/Comments"
+import AddComment from "./comments/AddComment"
+import userContext from './userContext'
+import dispatchContext from './dispatchContext'
 
-const ACTIONS = {
+export const ACTIONS = {
   ADD: 'add',
   REMOVE: 'remove',
   UPDATE: 'update',
@@ -256,33 +260,43 @@ function App() {
       localStorage.setItem('comments', JSON.stringify(comments))
   }, [localStorage, comments])
 
-  const renderComments = (comments) => {
-    if ( 0 === comments.length ) {
-      return
-    }
+  const UserContext = userContext
+  const DispatchContext = dispatchContext
 
-    return (
-      <ol>
-        { comments.map(comment => {
-          return <li key={comment.id}>{ comment.id } { comment.replies && renderComments(comment.replies) }</li>
-        })}
-      </ol>
-    )
-  }
+  // const renderComments = (comments) => {
+  //   if ( 0 === comments.length ) {
+  //     return
+  //   }
+
+  //   return (
+  //     <ol>
+  //       { comments.map(comment => {
+  //         return <li key={comment.id}>{ comment.id } { comment.replies && renderComments(comment.replies) }</li>
+  //       })}
+  //     </ol>
+  //   )
+  // }
+
+// <>
+//   <section className="container" aria-labelledby="comment-heading">
+//     <h1 id="comment-heading" className="sr-only">Interactive Comments</h1>
+//     {renderComments(comments)}
+//   </section>
+
+//   <button onClick={ () => dispatch({type: ACTIONS.ADD, payload: {pid: 6}}) }>Add</button>
+//   <button onClick={ () => dispatch({type: ACTIONS.REMOVE, payload: {id: 2}}) }>Remove</button>
+//   <button onClick={ () => dispatch({type: ACTIONS.UPDATE, payload: {id: 8, content: "updated content"}}) }>Updated</button>
+//   <button onClick={ () => dispatch({type: ACTIONS.SCORE.INCREASE, payload: {id: 8}}) }>Score +</button>
+//   <button onClick={ () => dispatch({type: ACTIONS.SCORE.DECREASE, payload: {id: 8}}) }>Score -</button>
+// </>
 
   return (
-    <>
-      <section className="container" aria-labelledby="comment-heading">
-        <h1 id="comment-heading" className="sr-only">Interactive Comments</h1>
-        {renderComments(comments)}
-      </section>
-
-      <button onClick={ () => dispatch({type: ACTIONS.ADD, payload: {pid: 6}}) }>Add</button>
-      <button onClick={ () => dispatch({type: ACTIONS.REMOVE, payload: {id: 2}}) }>Remove</button>
-      <button onClick={ () => dispatch({type: ACTIONS.UPDATE, payload: {id: 8, content: "updated content"}}) }>Updated</button>
-      <button onClick={ () => dispatch({type: ACTIONS.SCORE.INCREASE, payload: {id: 8}}) }>Score +</button>
-      <button onClick={ () => dispatch({type: ACTIONS.SCORE.DECREASE, payload: {id: 8}}) }>Score -</button>
-    </>
+    <DispatchContext.Provider value={dispatch}>
+      <UserContext.Provider value={data.currentUser}>
+        <Comments comments={comments} />
+        <AddComment btnText='Send'/>
+      </UserContext.Provider>
+    </DispatchContext.Provider>
   );
 }
 
