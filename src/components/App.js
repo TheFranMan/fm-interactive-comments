@@ -17,13 +17,7 @@ export const ACTIONS = {
 }
 
 function App() {
-  const loggedInUser = {
-    "image": {
-      "png": "./images/avatars/image-amyrobson.png",
-      "webp": "./images/avatars/image-amyrobson.webp"
-    },
-    "username": "amyrobson"
-  }
+  const loggedInUser = data.currentUser
 
   const defaultComment = {
       "id": 0,
@@ -169,12 +163,18 @@ function App() {
           pid = action.payload.pid
         }
 
+        if (!action.payload || !action.payload.comment) {
+          return comments
+        }
+
+        let id = gethighestID(comments) + 1
+
         if ( null === pid ) {
-          return [...comments, newComment(gethighestID(comments) + 1 , "New comment text")]
+          return [...comments, newComment(id , action.payload.comment)]
         }
 
 
-        let [added, updatedComments] = addComment(comments, pid, newComment(gethighestID(comments) + 1 , "New comment text"))
+        let [added, updatedComments] = addComment(comments, pid, newComment(id , action.payload.comment))
         if ( added ) {
           return updatedComments
         }
@@ -291,9 +291,9 @@ function App() {
 // </>
 
   return (
-    <DispatchContext.Provider value={dispatch}>
-      <UserContext.Provider value={data.currentUser}>
-        <Comments comments={comments} />
+    <DispatchContext.Provider value={ dispatch }>
+      <UserContext.Provider value={ loggedInUser }>
+        <Comments comments={ comments } />
         <AddComment btnText='Send'/>
       </UserContext.Provider>
     </DispatchContext.Provider>
