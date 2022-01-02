@@ -256,29 +256,6 @@ function App() {
       localStorage.setItem('comments', JSON.stringify(comments))
   }, [localStorage, comments])
 
-    // const getComment = (comments, id) => {
-    //   let length = comments.length
-
-    //   for (let i = 0; i < length; i++) {
-    //     let comment = comments[i]
-
-    //     if ( id === comment.id ) {
-    //       return comment
-    //     }
-
-    //     if ( comment.replies && 0 < comment.replies.length ) {
-    //       let response = getComment(comment.replies, id)
-
-    //       if ( response ) {
-    //         return response
-    //       }
-    //     }
-    //   }
-
-    //   return null
-    // }
-
-
   const renderComments = (comments) => {
     if ( 0 === comments.length ) {
       return
