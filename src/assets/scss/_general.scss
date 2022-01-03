@@ -41,6 +41,10 @@
     font-weight: 400;
 }
 
+html {
+    font-size: 62.5%;
+}
+
 body,
 html {
     height: 100%;
@@ -48,6 +52,10 @@ html {
 
 body {
     font-family: vars.$ff;
-    font-size: 62.5%;
-}
+    background-color: vars.$wisper;
 
+    #root {
+        width: 343px;
+        margin: 10em auto 0;
+    }
+}
