@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useState, useRef } from "react";
 import userContext from '../userContext'
 import dispatchContext from '../dispatchContext'
 import {ReactComponent as IconPlus} from "./../../assets/images/icon-plus.svg"
@@ -15,8 +15,37 @@ export default Comment = ({comment}) => {
 
     const [showReply, updateShowReply] = useState(false)
 
-    const handleEdit = () => {
+    const replyRef = useRef(null);
+
+    const handleReplyLink = () => {
+        replyRef.current.focus()
         updateShowReply(true)
+    }
+
+    const handleReplySubmit = (e) => {
+        e.preventDefault()
+
+        let reply = replyRef.current.value
+        if ('' === reply) {
+            return
+        }
+
+        let payload = {
+            comment: reply
+        }
+
+        if ( comment.id ) {
+            payload.pid = comment.id
+        }
+
+        replyRef.current.value = null
+
+        dispatch({
+            type: ACTIONS.ADD,
+            payload: payload
+        })
+
+        updateShowReply(false)
     }
 
     return (
@@ -43,9 +72,16 @@ export default Comment = ({comment}) => {
                             <IconMinus />
                     </button>
                 </div>
-                <Actions comment={comment} handleEdit={handleEdit} />
+                <Actions comment={comment} handleReplyLink={ handleReplyLink } />
             </div>
-            { !isAuthor && <AddComment className='reply' showReply={ showReply } btnText='Reply' pid={ comment.id } /> } 
+            { !isAuthor &&
+              <AddComment
+                className='reply'
+                showReply={ showReply }
+                btnText='Reply'
+                replyRef={ replyRef }
+                handleSubmit={ handleReplySubmit }
+            /> }
         </>
     )
 }

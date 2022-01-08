@@ -6,7 +6,7 @@ import {ReactComponent as IconDelete} from "../../assets/images/icon-delete.svg"
 import {ReactComponent as IconEdit} from "../../assets/images/icon-edit.svg"
 import {ReactComponent as IconReply} from "../../assets/images/icon-reply.svg"
 
-export default function Actions ({comment, handleEdit}) {
+export default function Actions ({comment, handleReplyLink}) {
     const user = useContext(userContext);
     const dispatch = useContext(dispatchContext);
 
@@ -29,7 +29,7 @@ export default function Actions ({comment, handleEdit}) {
             }
             { !isAuthor &&
                 <li key='rely' className="actions__item">
-                    <button className='actions__item__btn actions__item__btn--reply' onClick={() => handleEdit()}>
+                    <button className='actions__item__btn actions__item__btn--reply' onClick={() => handleReplyLink()}>
                         <IconReply />Reply
                     </button>
                 </li>

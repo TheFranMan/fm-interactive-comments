@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useReducer } from 'react'
+import React, { useEffect, useMemo, useReducer, useRef } from 'react'
 import "../assets/scss/main.scss"
 import data from "../data.json"
 import Comments from "./comments/Comments"
@@ -263,6 +263,26 @@ function App() {
   const UserContext = userContext
   const DispatchContext = dispatchContext
 
+  const newCommentRef = useRef(null);
+
+  const handleNewComment = (e) => {
+    e.preventDefault()
+
+    let reply = newCommentRef.current.value
+    if ('' === reply) {
+        return
+    }
+
+    newCommentRef.current.value = null
+
+    dispatch({
+        type: ACTIONS.ADD,
+        payload: {
+          comment: reply
+      }
+    })
+}
+
   // const renderComments = (comments) => {
   //   if ( 0 === comments.length ) {
   //     return
@@ -294,7 +314,7 @@ function App() {
     <DispatchContext.Provider value={ dispatch }>
       <UserContext.Provider value={ loggedInUser }>
         <Comments comments={ comments } />
-        <AddComment btnText='Send'/>
+        <AddComment btnText='Send' replyRef={ newCommentRef } handleSubmit={ handleNewComment }/>
       </UserContext.Provider>
     </DispatchContext.Provider>
   );
