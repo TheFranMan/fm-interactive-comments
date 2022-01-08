@@ -14,12 +14,19 @@ export default Comment = ({comment}) => {
     let isAuthor = comment.user.username === user.username || false
 
     const [showReply, updateShowReply] = useState(false)
+    const [editing, updateEditing] = useState(false)
 
     const replyRef = useRef(null);
+    const editRef = useRef(null);
 
     const handleReplyLink = () => {
         replyRef.current.focus()
         updateShowReply(true)
+    }
+
+    const handleEditLink = () => {
+        updateEditing(true)
+        // editRef.current.focus()
     }
 
     const handleReplySubmit = (e) => {
@@ -48,6 +55,30 @@ export default Comment = ({comment}) => {
         updateShowReply(false)
     }
 
+    const handleCancel = () => {
+        updateEditing(false)
+        updateShowReply(false)
+    }
+
+    const handleUpdate = () => {
+        let update = editRef.current.value
+        if ('' === update) {
+            return
+        }
+
+        dispatch({
+            type: ACTIONS.UPDATE,
+            payload: {
+                id: comment.id,
+                content: update,
+            }
+        })
+
+        updateEditing(false)
+    }
+
+    let editComment = <textarea className='comment__body f-reg' defaultValue={ comment.content } ref={ editRef } ></textarea>
+
     return (
         <>
             <div className='comment'>
@@ -56,9 +87,11 @@ export default Comment = ({comment}) => {
                     <span className='comment__heading__name f-lrg'>{ comment.user.username }</span>
                     <span className='comment__heading__created f-reg'>{ comment.createdAt }</span>
                 </header>
-                <div className='comment__body f-reg'>
-                    { comment.content }
-                </div>
+                { !editing ?
+                    <div className='comment__body f-reg'>{ comment.content }</div>
+                    :
+                    editComment
+                 }
                 <div className='comment__score' aria-label="score">
                     <button
                         className='comment__score__btn comment__score__btn--increase'
@@ -72,7 +105,13 @@ export default Comment = ({comment}) => {
                             <IconMinus />
                     </button>
                 </div>
-                <Actions comment={comment} handleReplyLink={ handleReplyLink } />
+                <Actions comment={comment}
+                         editing={ editing }
+                         handleReplyLink={ handleReplyLink }
+                         handleEditLink={ handleEditLink }
+                         handleCancel={ handleCancel }
+                         handleUpdate={ handleUpdate }
+                />
             </div>
             { !isAuthor &&
               <AddComment
@@ -81,6 +120,7 @@ export default Comment = ({comment}) => {
                 btnText='Reply'
                 replyRef={ replyRef }
                 handleSubmit={ handleReplySubmit }
+                handleCancel={ handleCancel }
             /> }
         </>
     )
