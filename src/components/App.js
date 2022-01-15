@@ -1,7 +1,8 @@
-import React, { useEffect, useMemo, useReducer, useRef } from 'react'
+import React, { useEffect, useMemo, useReducer, useRef, useState } from 'react'
 import "../assets/scss/main.scss"
 import data from "../data.json"
 import Comments from "./comments/Comments"
+import Modal from "./Modal"
 import AddComment from "./comments/AddComment"
 import userContext from './userContext'
 import dispatchContext from './dispatchContext'
@@ -283,38 +284,20 @@ function App() {
     })
 }
 
-  // const renderComments = (comments) => {
-  //   if ( 0 === comments.length ) {
-  //     return
-  //   }
+const [deleteId, updateDeleteId] = useState(null)
+const handleDelete = (e) => {
+  e.preventDefault()
 
-  //   return (
-  //     <ol>
-  //       { comments.map(comment => {
-  //         return <li key={comment.id}>{ comment.id } { comment.replies && renderComments(comment.replies) }</li>
-  //       })}
-  //     </ol>
-  //   )
-  // }
-
-// <>
-//   <section className="container" aria-labelledby="comment-heading">
-//     <h1 id="comment-heading" className="sr-only">Interactive Comments</h1>
-//     {renderComments(comments)}
-//   </section>
-
-//   <button onClick={ () => dispatch({type: ACTIONS.ADD, payload: {pid: 6}}) }>Add</button>
-//   <button onClick={ () => dispatch({type: ACTIONS.REMOVE, payload: {id: 2}}) }>Remove</button>
-//   <button onClick={ () => dispatch({type: ACTIONS.UPDATE, payload: {id: 8, content: "updated content"}}) }>Updated</button>
-//   <button onClick={ () => dispatch({type: ACTIONS.SCORE.INCREASE, payload: {id: 8}}) }>Score +</button>
-//   <button onClick={ () => dispatch({type: ACTIONS.SCORE.DECREASE, payload: {id: 8}}) }>Score -</button>
-// </>
+  dispatch({type: ACTIONS.REMOVE, payload: {id: deleteId}})
+  updateDeleteId(null)
+}
 
   return (
     <DispatchContext.Provider value={ dispatch }>
       <UserContext.Provider value={ loggedInUser }>
-        <Comments comments={ comments } />
-        <AddComment btnText='Send' replyRef={ newCommentRef } handleSubmit={ handleNewComment }/>
+        <Comments comments={ comments } updateDeleteId={ updateDeleteId }/>
+        <AddComment btnText='Send' replyRef={ newCommentRef } handleSubmit={ handleNewComment } />
+        <Modal deleteId={ deleteId } updateDeleteId={ updateDeleteId } handleDelete={ handleDelete } />
       </UserContext.Provider>
     </DispatchContext.Provider>
   );

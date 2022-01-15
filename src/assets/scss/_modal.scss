@@ -1,0 +1,96 @@
+@use 'vars';
+
+.modal-container {
+    display: none;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0,0,0, .6);
+
+    &.open {
+        position: fixed;
+        top: 0;
+        left: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .modal {
+        width: 90%;
+        max-width: 400px;
+        padding: 3.2em;
+        background-color: vars.$white;
+        border-radius: 8px;
+
+        &__form {
+            display: flex;
+            flex-direction: column;
+            gap: 2em;
+
+            &__text {
+                color: vars.$cl-tertiary;
+                line-height: 1.5;
+            }
+
+            &__btn {
+                font-family: vars.$ff;
+                font-size: 1.6rem;
+                font-weight: 500;
+                padding: .75em 2.03125em;
+                border: none;
+                border-radius: 8px;
+                color: vars.$white;
+                text-transform: uppercase;
+
+                &:hover {
+                    cursor: pointer;
+                }
+            }
+            &__btn--cancel {
+                background-color: vars.$cl-tertiary;
+            }
+
+            &__btn--delete {
+                background-color: vars.$cl-alert;
+            }
+
+        }
+    }
+}
+
+@media (min-width: 500px) {
+    .modal-container {
+        .modal {
+            &__form {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 0;
+
+                &__heading,
+                &__text {
+                    grid-column: 1 / -1;
+                }
+
+                &__heading {
+                    margin-bottom: 0.83333em;
+                }
+
+                &__text {
+                    margin-bottom: 1.25em;
+                }
+
+                &__btn--cancel {
+                    grid-column: 1 / 2;
+                    grid-row: 3 / 4;
+                    justify-self: start;
+                }
+
+                &__btn--delete {
+                    grid-column: 2 / 3;
+                    grid-row: 3 / 4;
+                    justify-self: end;
+                }
+            }
+        }
+    }
+}

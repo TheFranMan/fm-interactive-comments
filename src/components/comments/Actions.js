@@ -6,7 +6,7 @@ import {ReactComponent as IconDelete} from "../../assets/images/icon-delete.svg"
 import {ReactComponent as IconEdit} from "../../assets/images/icon-edit.svg"
 import {ReactComponent as IconReply} from "../../assets/images/icon-reply.svg"
 
-export default function Actions ({comment, editing, handleReplyLink, handleEditLink, handleCancel, handleUpdate}) {
+export default function Actions ({comment, editing, handleReplyLink, handleEditLink, handleCancel, handleUpdate, handleDeleteLink}) {
     const user = useContext(userContext);
     const dispatch = useContext(dispatchContext);
 
@@ -21,7 +21,7 @@ export default function Actions ({comment, editing, handleReplyLink, handleEditL
     if ( isAuthor ) {
         actions = <>
                       <li key='delete' className="actions__item">
-                          <button className='actions__item__btn actions__item__btn--delete f-med' onClick={() => dispatch({type: ACTIONS.REMOVE, payload: {id: comment.id}})}>
+                          <button className='actions__item__btn actions__item__btn--delete f-med' onClick={() => handleDeleteLink() }>
                               <IconDelete /><span>Delete</span>
                           </button>
                       </li>
