@@ -1,95 +1,82 @@
 @use 'vars';
 
-.modal-container {
-    display: none;
-    width: 100vw;
-    height: 100vh;
-    background-color: rgba(0,0,0, .6);
+.modal {
+    max-width: 343px;
+    margin: 0 1.6em;
+    padding: 2.7em 2.4em;
+    background-color: vars.$white;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 1.6em;
 
-    &.open {
-        position: fixed;
-        top: 0;
-        left: 0;
-        display: flex;
-        justify-content: center;
-        align-items: center;
+    &__heading {
+        color: vars.$cl-secondary;
+        font-size: 2rem;
+        font-weight: 500;
     }
 
-    .modal {
-        width: 90%;
-        max-width: 400px;
-        padding: 3.2em;
-        background-color: vars.$white;
-        border-radius: 8px;
+    &__description {
+        color: vars.$cl-tertiary;
+        line-height: 1.5;
+    }
 
-        &__form {
-            display: flex;
-            flex-direction: column;
-            gap: 2em;
+    &__form {
+        display: flex;
+        flex-direction: column;
+        gap: 1.6em;
 
-            &__text {
-                color: vars.$cl-tertiary;
-                line-height: 1.5;
+        &__btn {
+            font-family: vars.$ff;
+            font-size: 1.6rem;
+            font-weight: 500;
+            line-height: 1.5;
+            padding: .75em 1.3125em;
+            border: none;
+            border-radius: 8px;
+            color: vars.$white;
+            text-transform: uppercase;
+
+            &:hover {
+                cursor: pointer;
             }
+        }
+        &__btn--cancel {
+            background-color: vars.$cl-tertiary;
+        }
 
-            &__btn {
-                font-family: vars.$ff;
-                font-size: 1.6rem;
-                font-weight: 500;
-                padding: .75em 2.03125em;
-                border: none;
-                border-radius: 8px;
-                color: vars.$white;
-                text-transform: uppercase;
-
-                &:hover {
-                    cursor: pointer;
-                }
-            }
-            &__btn--cancel {
-                background-color: vars.$cl-tertiary;
-            }
-
-            &__btn--delete {
-                background-color: vars.$cl-alert;
-            }
-
+        &__btn--delete {
+            background-color: vars.$cl-alert;
         }
     }
 }
 
-@media (min-width: 500px) {
-    .modal-container {
-        .modal {
-            &__form {
-                display: grid;
-                grid-template-columns: repeat(2, 1fr);
-                gap: 0;
+@media (min-width: 360px) {
+    .modal {
+        &__form {
+            flex-direction: row;
+            gap: 0;
+            justify-content: space-between;
+        }
+    }
+}
 
-                &__heading,
-                &__text {
-                    grid-column: 1 / -1;
-                }
+@media (min-width: 1024px) {
+    .modal {
+        max-width: 400px;
+        gap: 2em;
+        padding: 3.2em;
+        margin: 0;
 
-                &__heading {
-                    margin-bottom: 0.83333em;
-                }
+        &__heading {
+            font-size: 2.4rem;
+        }
 
-                &__text {
-                    margin-bottom: 1.25em;
-                }
+        &__form {
+            display: flex;
 
-                &__btn--cancel {
-                    grid-column: 1 / 2;
-                    grid-row: 3 / 4;
-                    justify-self: start;
-                }
-
-                &__btn--delete {
-                    grid-column: 2 / 3;
-                    grid-row: 3 / 4;
-                    justify-self: end;
-                }
+            &__btn {
+                padding: .75em 2.03125em;
             }
         }
     }
