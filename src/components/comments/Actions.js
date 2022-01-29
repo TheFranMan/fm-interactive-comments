@@ -1,14 +1,11 @@
 import { useContext } from "react";
 import userContext from '../userContext'
-import dispatchContext from '../dispatchContext'
-import { ACTIONS } from '../App'
 import {ReactComponent as IconDelete} from "../../assets/images/icon-delete.svg"
 import {ReactComponent as IconEdit} from "../../assets/images/icon-edit.svg"
 import {ReactComponent as IconReply} from "../../assets/images/icon-reply.svg"
 
 export default function Actions ({comment, editing, handleReplyLink, handleEditLink, handleCancel, handleUpdate, handleDeleteLink}) {
     const user = useContext(userContext);
-    const dispatch = useContext(dispatchContext);
 
     let isAuthor = comment.user.username === user.username || false
 

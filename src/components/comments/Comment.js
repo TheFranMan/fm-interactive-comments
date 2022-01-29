@@ -7,7 +7,7 @@ import Actions from './Actions'
 import AddComment from "./AddComment"
 import { ACTIONS } from '../App'
 
-export default Comment = ({comment, updateDeleteId}) => {
+const Comment = ({comment, updateDeleteId}) => {
     const user = useContext(userContext);
     const dispatch = useContext(dispatchContext);
 
@@ -130,3 +130,5 @@ export default Comment = ({comment, updateDeleteId}) => {
         </>
     )
 }
+
+export default Comment
