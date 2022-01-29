@@ -41,6 +41,7 @@
             grid-column: 1 / -1;
             color: vars.$cl-tertiary;
             margin-bottom: 1.6em;
+            line-height: 1.5;
         }
 
         &__score {
@@ -57,6 +58,9 @@
                 color: vars.$cl-highlight;
                 background-color: vars.$cl-accent;
                 border: none;
+                $dimension: 19px;
+                height: $dimension;
+                width: $dimension;
 
                 &--decrease {
                     display: flex;
@@ -81,6 +85,7 @@
                     display: flex;
                     align-items: center;
                     gap: .5em;
+                    line-height: 1.5;
 
                     &--delete {
                         color: vars.$cl-alert;
