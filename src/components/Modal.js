@@ -10,6 +10,7 @@ export default function Modal({deleteId, updateDeleteId, handleDelete}) {
                     includeDefaultStyles="false"
                     verticallyCenter="true"
                     underlayColor="rgba(0,0,0, .6)"
+                    alert="true"
                 >
                     <div className="modal">
                         <h2 id='modal-heading' className="modal__heading">Delete comment</h2>
