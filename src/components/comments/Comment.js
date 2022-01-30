@@ -83,7 +83,7 @@ const Comment = ({comment, updateDeleteId}) => {
 
     const timeSince = (ts) => {
         let now = new Date()
-        let timeStamp = new Date(ts * 1000)
+        let timeStamp = new Date(ts)
         let secondsPast = ( now.getTime() - timeStamp.getTime() ) / 1000;
 
         let min = 60
@@ -107,7 +107,7 @@ const Comment = ({comment, updateDeleteId}) => {
         let displayUnit = ""
 
         if(secondsPast < min){
-            displayNum = secondsPast
+            displayNum = parseInt(secondsPast)
             displayUnit = units.second
         } else if(secondsPast < hour){
             displayNum = parseInt(secondsPast/min)
