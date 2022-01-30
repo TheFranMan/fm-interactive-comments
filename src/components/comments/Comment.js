@@ -106,6 +106,10 @@ const Comment = ({comment, updateDeleteId}) => {
         let displayNum = 0
         let displayUnit = ""
 
+        if ( 0 === parseInt(secondsPast ) ) {
+            return "now"
+        }
+
         if(secondsPast < min){
             displayNum = parseInt(secondsPast)
             displayUnit = units.second
