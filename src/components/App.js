@@ -242,17 +242,22 @@ function App() {
     return highest
   }
 
+  const sortByScore = (comments) => {
+    return comments.sort((a, b) => b.score - a.score )
+  }
+
   // Retrieve comments from local storage if they are there, otherwise get from the data object
   const memoizedSavedComments = useMemo(() => {
     let localComments = localStorage.getItem('comments')
 
     if ( localComments ) {
-      console.log('comments from local storage')
-      return JSON.parse(localComments)
+      // console.log('comments from local storage')
+      return sortByScore(JSON.parse(localComments))
     }
 
-    console.log('comments from data object')
-    return data.comments
+    // console.log('comments from data object')
+
+    return sortByScore(data.comments)
   }, [localStorage])
   const [comments, dispatch] = useReducer(reducer, memoizedSavedComments)
 
