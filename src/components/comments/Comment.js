@@ -20,6 +20,8 @@ const Comment = ({comment, updateDeleteId}) => {
     const editRef = useRef(null);
 
     const handleReplyLink = () => {
+        document.querySelector(`.to-${comment.id}`).setAttribute('aria-hidden', 'false')
+
         replyRef.current.focus()
         updateShowReply(true)
     }
@@ -141,14 +143,15 @@ const Comment = ({comment, updateDeleteId}) => {
     }
 
     let editComment = <textarea className='comment__body f-reg' defaultValue={ comment.content } ref={ editRef } ></textarea>
+    let commentParentClass = `to-${comment.id}`
 
     return (
         <>
-            <div className='comment'>
-                <header className='comment__heading'>
+            <div className={ `comment comment-${comment.id}` }>
+                <header className='comment__heading' aria-label="user details">
                     <img src={comment.user.image.png} className='comment__heading__avatar' alt='' />
-                    <span className='comment__heading__name f-lrg'>{ comment.user.username }</span>
-                    <span className='comment__heading__created f-reg'>{ timeSince(comment.createdAt) }</span>
+                    <span className='comment__heading__name f-lrg' aria-label="username">{ comment.user.username }</span>
+                    <span className='comment__heading__created f-reg' aria-label="created">{ timeSince(comment.createdAt) }</span>
                 </header>
                 { !editing ?
                     <div className='comment__body f-reg'>{ comment.content }</div>
@@ -157,12 +160,14 @@ const Comment = ({comment, updateDeleteId}) => {
                  }
                 <div className='comment__score' aria-label="score">
                     <button
+                        aria-label="increase score"
                         className='comment__score__btn comment__score__btn--increase'
                         onClick={() => dispatch({type: ACTIONS.SCORE.INCREASE, payload: {id: comment.id}})}>
                             <IconPlus />
                     </button>
                     <span className="comment__score__value f-med">{ comment.score }</span>
                     <button
+                        aria-label="decrease score"
                         className='comment__score__btn comment__score__btn--decrease'
                         onClick={() => dispatch({type: ACTIONS.SCORE.DECREASE, payload: {id: comment.id}})}>
                             <IconMinus />
@@ -179,7 +184,7 @@ const Comment = ({comment, updateDeleteId}) => {
             </div>
             { !isAuthor &&
               <AddComment
-                className='reply'
+                className={ `reply to-${comment.id}` }
                 showReply={ showReply }
                 btnText='Reply'
                 replyRef={ replyRef }

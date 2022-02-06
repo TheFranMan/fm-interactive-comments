@@ -45,7 +45,7 @@ export default function Actions ({comment, editing, handleReplyLink, handleEditL
     }
 
     return (
-        <ul className="actions">
+        <ul className="actions" aria-label="actions">
             { actions }
         </ul>
     )
