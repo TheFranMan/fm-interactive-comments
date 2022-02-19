@@ -59,3 +59,11 @@ body {
         margin: 10em auto 0;
     }
 }
+
+@media (min-width: vars.$desktop) {
+    body {
+        #root {
+            width: 730px;
+        }
+    }
+}
