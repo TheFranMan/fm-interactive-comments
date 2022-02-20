@@ -127,19 +127,10 @@
     }
 
     .reply {
-        max-height: 0;
-        padding: 0;
-        overflow: hidden;
-        transition: max-height 200ms ease-in-out;
-
-        &:not(.visable) {
-            transition: none;
-        }
+        display: none;
 
         &.visable {
-            padding: inherit;
-            max-height: 200px;
-            padding: 1.6em;
+            display: grid;
         }
     }
 }
@@ -195,6 +186,10 @@
         .comment {
             padding: 2.4em;
             margin-bottom: 2em;
+
+            &.replying {
+                margin-bottom: 0.8em;
+            }
 
             &__heading {
                 grid-column: 2 / 3;

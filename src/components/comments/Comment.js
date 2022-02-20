@@ -20,7 +20,7 @@ const Comment = ({comment, updateDeleteId}) => {
     const editRef = useRef(null);
 
     const handleReplyLink = () => {
-        document.querySelector(`.to-${comment.id}`).setAttribute('aria-hidden', 'false')
+        // document.querySelector(`.to-${comment.id}`).setAttribute('aria-hidden', 'false')
 
         replyRef.current.focus()
         updateShowReply(true)
@@ -144,10 +144,11 @@ const Comment = ({comment, updateDeleteId}) => {
 
     let editComment = <textarea className='comment__body f-reg' defaultValue={ comment.content } ref={ editRef } ></textarea>
     let commentParentClass = `to-${comment.id}`
+    let replyingClass = showReply ? "replying" : ""
 
     return (
         <>
-            <div className={ `comment comment-${comment.id}` }>
+            <div className={ `comment comment-${comment.id} ${replyingClass}` }>
                 <header className='comment__heading' aria-label="user details">
                     <img src={comment.user.image.png} className='comment__heading__avatar' alt='' />
                     <span className='comment__heading__name f-lrg' aria-label="username">{ comment.user.username }</span>
