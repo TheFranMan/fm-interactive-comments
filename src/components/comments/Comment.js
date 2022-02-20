@@ -148,17 +148,17 @@ const Comment = ({comment, updateDeleteId}) => {
     return (
         <>
             <div className={ `comment comment-${comment.id} ${replyingClass}` }>
-                <header className='comment__heading' aria-label="user details">
+                <header className='comment__heading'>
                     <img src={comment.user.image.png} className='comment__heading__avatar' alt='' />
-                    <span className='comment__heading__name f-lrg' aria-label="username">{ comment.user.username }</span>
-                    <span className='comment__heading__created f-reg' aria-label="created">{ timeSince(comment.createdAt) }</span>
+                    <span className='comment__heading__name f-lrg'>{ comment.user.username }</span>
+                    <span className='comment__heading__created f-reg'>{ timeSince(comment.createdAt) }</span>
                 </header>
                 { !editing ?
                     <div className='comment__body f-reg'>{ comment.content }</div>
                     :
                     editComment
                  }
-                <div className='comment__score' aria-label="score">
+                <div className='comment__score'>
                     <button
                         aria-label="increase score"
                         className='comment__score__btn comment__score__btn--increase'
