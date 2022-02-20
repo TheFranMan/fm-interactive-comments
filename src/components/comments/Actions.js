@@ -18,35 +18,40 @@ export default function Actions ({comment, editing, handleReplyLink, handleEditL
     if ( isAuthor ) {
         actions = <>
                       <li key='delete' className="actions__item">
-                          <button className='actions__item__btn actions__item__btn--delete f-med' onClick={() => handleDeleteLink() }>
+                          <button className='actions__item__btn actions__item__btn--delete f-med' disabled={ editing } onClick={() => handleDeleteLink() }>
                               <IconDelete /><span>Delete</span>
                           </button>
                       </li>
                       <li key='edit' className="actions__item">
-                          <button className='actions__item__btn actions__item__btn--edit f-med' onClick={ () => handleEditLink() }>
+                          <button className='actions__item__btn actions__item__btn--edit f-med' disabled={ editing } onClick={ () => handleEditLink() }>
                           <IconEdit />Edit</button>
                       </li>
                   </>
-
-        if ( editing ) {
-            actions = <>
-                      <li key='cancel' className="actions__item">
-                          <button className='actions__item__btn actions__item__btn--cancel f-med' onClick={ () => handleCancel() }>
-                              Cancel
-                          </button>
-                      </li>
-                      <li key='update' className="actions__item">
-                          <button className='actions__item__btn actions__item__btn--update f-med' onClick={ () => handleUpdate() }>
-                                Update
-                          </button>
-                      </li>
-            </>
-        }
     }
 
+    let editingItems = ''
+    if ( editing ) {
+        editingItems = <ul className="editing">
+                        <li key='cancel' className="actions__item">
+                            <button className='actions__item__btn actions__item__btn--cancel f-med' onClick={ () => handleCancel() }>
+                                Cancel
+                            </button>
+                        </li>
+                        <li key='update' className="actions__item">
+                            <button className='actions__item__btn actions__item__btn--update f-med' onClick={ () => handleUpdate() }>
+                                Update
+                            </button>
+                        </li>
+                    </ul>
+    }
+
+    let actionsClass = editing ? "actions is-editing" : "actions"
     return (
-        <ul className="actions" aria-label="actions">
-            { actions }
-        </ul>
+        <>
+            <ul className={ actionsClass } aria-label="actions">
+                { actions }
+            </ul>
+            { editingItems }
+        </>
     )
 }

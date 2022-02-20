@@ -1,5 +1,14 @@
 @use 'vars';
 
+@mixin button() {
+    background-color: vars.$cl-primary;
+    color: vars.$cl-bright;
+    border: none;
+    text-transform: uppercase;
+    border-radius: 8px;
+    min-width: 104px;
+}
+
 .comments {
     list-style-type: none;
 
@@ -45,6 +54,13 @@
             line-height: 1.5;
         }
 
+        textarea.comment__body {
+            border: 1px solid vars.$cl-primary;
+            border-radius: 8px;
+            padding: .75em 1.5em;
+            font-family: inherit;
+        }
+
         &__score {
             display: flex;
             align-items: center;
@@ -71,6 +87,7 @@
             }
         }
 
+        .editing,
         .actions {
             grid-column: 2 / -1;
             justify-self: end;
@@ -93,6 +110,18 @@
                         color: vars.$cl-alert;
                     }
                 }
+            }
+
+            &.is-editing {
+                display: none;
+            }
+        }
+
+        .editing {
+            .actions__item__btn--update {
+                padding: .75em 1.25em;
+                font-family: inherit;
+                @include button();
             }
         }
     }
@@ -135,6 +164,7 @@
         border-radius: 8px;
         padding: .75em 1.5em;
         resize:none;
+        line-height: 1.5;
         color: vars.$cl-secondary;
 
         &:focus {
@@ -152,13 +182,10 @@
     &__submit {
         grid-column: 3 / -1;
         padding: .75em 1.875em;
-        background-color: vars.$cl-primary;
-        color: vars.$cl-bright;
-        border: none;
-        text-transform: uppercase;
-        border-radius: 8px;
+        line-height: 1.5;
         width: 104px;
         justify-self: end;
+        @include button();
     }
 }
 
@@ -178,6 +205,10 @@
                 grid-column: 2 / -1;
             }
 
+            textarea.comment__body {
+                margin-bottom: 1em;
+            }
+
             &__score {
                 grid-column: 1 / 2;
                 grid-row: 1 / 3;
@@ -190,6 +221,13 @@
             .actions {
                 grid-column: 3 / -1;
                 grid-row: 1 / 2;
+                align-items: flex-start;
+                padding-top: .5em;
+
+                &.is-editing {
+                    display: flex;
+                    opacity: .5;
+                }
             }
         }
     }
@@ -197,12 +235,17 @@
     .response {
         gap: 1.6em;
 
+        &.reply.visable {
+            padding: 2.4em;
+        }
+
         * {
             grid-row: 1 / -1;
         }
 
         &__content {
             grid-column: 2 / 3;
+            margin-bottom: 0;
         }
 
         &__avatar {
