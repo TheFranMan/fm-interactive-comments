@@ -143,7 +143,6 @@ const Comment = ({comment, updateDeleteId}) => {
     }
 
     let editComment = <textarea className='comment__body f-reg' defaultValue={ comment.content } ref={ editRef } ></textarea>
-    let commentParentClass = `to-${comment.id}`
     let replyingClass = showReply ? "replying" : ""
 
     return (
