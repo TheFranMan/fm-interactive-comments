@@ -7,15 +7,13 @@ import {ReactComponent as IconReply} from "../../assets/images/icon-reply.svg"
 export default function Actions ({comment, editing, handleReplyLink, handleEditLink, handleCancel, handleUpdate, handleDeleteLink}) {
     const user = useContext(userContext);
 
-    let isAuthor = comment.user.username === user.username || false
-
-    let actions = <li key='rely' className="actions__item">
-                      <button className='actions__item__btn actions__item__btn--reply f-med' onClick={() => handleReplyLink()}>
-                          <IconReply />Reply
-                      </button>
+    let actions = <li key='reply' className="actions__item">
+                    <button className='actions__item__btn actions__item__btn--reply f-med' onClick={() => handleReplyLink()}>
+                        <IconReply />Reply
+                    </button>
                   </li>
 
-    if ( isAuthor ) {
+    if ( comment.user.username === user.username ) {
         actions = <>
                       <li key='delete' className="actions__item">
                           <button className='actions__item__btn actions__item__btn--delete f-med' disabled={ editing } onClick={() => handleDeleteLink() }>

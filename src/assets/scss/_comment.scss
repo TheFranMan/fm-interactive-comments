@@ -42,6 +42,16 @@
                 color: vars.$cl-secondary;
             }
 
+            &__you {
+                margin-left: -0.615384em;
+                color: vars.$cl-bright;
+                background-color: vars.$cl-primary;
+                border-radius: .2em;
+                font-size: 1.3rem;
+                font-weight: 500;
+                padding: .2em .7em;
+            }
+
             &__created {
                 color: vars.$cl-tertiary;
             }
