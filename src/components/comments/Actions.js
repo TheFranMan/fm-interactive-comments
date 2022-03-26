@@ -8,7 +8,7 @@ export default function Actions ({comment, editing, handleReplyLink, handleEditL
     const user = useContext(userContext);
 
     let actions = <li key='reply' className="actions__item">
-                    <button className='actions__item__btn actions__item__btn--reply f-med' onClick={() => handleReplyLink()}>
+                    <button className='actions__item__btn actions__item__btn--reply f-med' aria-controls={ `to-${ comment.id }` } onClick={() => handleReplyLink()}>
                         <IconReply />Reply
                     </button>
                   </li>
