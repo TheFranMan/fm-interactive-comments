@@ -10,6 +10,7 @@ export default function Modal({deleteId, updateDeleteId, handleDelete}) {
                     includeDefaultStyles="false"
                     verticallyCenter="true"
                     underlayColor="rgba(0,0,0, .6)"
+                    onExit={ handleCancel }
                     alert="true"
                 >
                     <div className="modal">
