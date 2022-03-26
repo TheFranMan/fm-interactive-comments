@@ -5,7 +5,7 @@ import userContext from '../userContext'
 export default function AddComment({btnText, className, showReply, replyRef, handleSubmit, handleCancel}) {
     const user = useContext(userContext);
 
-    let id = ""
+    let id = null
     if ( className ) {
         let classNames = className.split(" ")
         for ( let i in classNames ) {
