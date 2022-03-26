@@ -3,7 +3,6 @@ import Comment from "./Comment"
 export default function Comments({comments, updateDeleteId}) {
     return (
         <>
-            <h1 className="sr-only">Frontend mentor comments</h1>
             <ol className='comments'>
                 { comments.map((comment) => {
                     return (

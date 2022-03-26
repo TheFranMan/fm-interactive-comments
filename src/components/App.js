@@ -140,6 +140,7 @@ const handleDelete = (e) => {
   return (
     <DispatchContext.Provider value={ dispatch }>
       <UserContext.Provider value={ data.currentUser }>
+        <h1 className="sr-only">Frontend mentor comments</h1>
         <Comments comments={ comments } updateDeleteId={ updateDeleteId }/>
         <AddComment btnText='Send' replyRef={ newCommentRef } handleSubmit={ handleNewComment } />
         <Modal deleteId={ deleteId } updateDeleteId={ updateDeleteId } handleDelete={ handleDelete } />
