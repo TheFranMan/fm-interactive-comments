@@ -13,8 +13,18 @@
     list-style-type: none;
 
     ol {
-        border-left: solid 2px vars.$cl-accent-thick;
-        padding-left: 1.6em;
+        padding-left: 8.8em;
+        position: relative;
+
+        &::before {
+            position: absolute;
+            content: "";
+            width: 2px;
+            height: 100%;
+            background-color:vars.$cl-accent-thick;
+            top: 0;
+            left: 4.4em;
+        }
     }
 
     .comment {
@@ -60,7 +70,6 @@
         &__body {
             grid-column: 1 / -1;
             color: vars.$cl-tertiary;
-            margin-bottom: 1.6em;
             line-height: 1.5;
         }
 
