@@ -93,7 +93,7 @@ function App() {
     // console.log('comments from data object')
 
     return sortByScore(data.comments)
-  }, [])
+  }, [localStorage])
 
   ////////////////////////////
   // Hooks
@@ -107,7 +107,7 @@ function App() {
   // Save the comments to localstorage when they are updated.
   useEffect(() => {
       localStorage.setItem('comments', JSON.stringify(comments))
-  }, [comments])
+  }, [comments, localStorage])
 
   ////////////////////////////
   // Handlers

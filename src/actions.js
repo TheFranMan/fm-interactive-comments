@@ -1,4 +1,4 @@
-export default {
+let actions = {
     ADD: 'add',
     REMOVE: 'remove',
     UPDATE: 'update',
@@ -7,3 +7,5 @@ export default {
         DECREASE: 'score_decrease',
     },
 }
+
+export default actions

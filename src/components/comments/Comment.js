@@ -1,4 +1,4 @@
-import React, { useContext, useState, useRef, useCallback } from "react";
+import React, { useContext, useState, useRef } from "react";
 import userContext from '../userContext'
 import dispatchContext from '../dispatchContext'
 import {ReactComponent as IconPlus} from "./../../assets/images/icon-plus.svg"
