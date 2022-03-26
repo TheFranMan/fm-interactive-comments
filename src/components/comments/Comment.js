@@ -1,4 +1,4 @@
-import { useContext, useState, useRef } from "react";
+import React, { useContext, useState, useRef, useCallback } from "react";
 import userContext from '../userContext'
 import dispatchContext from '../dispatchContext'
 import {ReactComponent as IconPlus} from "./../../assets/images/icon-plus.svg"
@@ -14,7 +14,7 @@ const Comment = ({comment, updateDeleteId}) => {
     const [showReply, updateShowReply] = useState(false)
     const [editing, updateEditing] = useState(false)
     const replyRef = useRef(null);
-    const editRef = useRef(null);
+    const editRef = useRef(null)
 
     const handleReplyLink = () => {
         // document.querySelector(`.to-${comment.id}`).setAttribute('aria-hidden', 'false')
@@ -82,7 +82,13 @@ const Comment = ({comment, updateDeleteId}) => {
 
     let isAuthor = comment.user.username === user.username || false
 
-    let editComment = <textarea className='comment__body f-reg' defaultValue={ comment.content } ref={ editRef } ></textarea>
+    let EditComment = React.forwardRef((props, ref) => (
+        <textarea className='comment__body f-reg' defaultValue={ comment.content } ref={ ref }></textarea>
+    ))
+
+    // let editComment = <textarea className='comment__body f-reg' value={ commentEdit } ref={ editRef } onChange={(e) => {
+    //     commentEditUpdate(e.target.value)
+    //  } }></textarea>
     let replyingClass = showReply ? "replying" : ""
 
     return (
@@ -99,7 +105,7 @@ const Comment = ({comment, updateDeleteId}) => {
                 { !editing ?
                     <div className='comment__body f-reg'>{ comment.content }</div>
                     :
-                    editComment
+                    <EditComment ref={ editRef }/>
                  }
                 <div className='comment__score'>
                     <button
@@ -108,7 +114,7 @@ const Comment = ({comment, updateDeleteId}) => {
                         onClick={() => dispatch({type: ACTIONS.SCORE.INCREASE, payload: {id: comment.id}})}>
                             <IconPlus />
                     </button>
-                    <span className="comment__score__value f-med">{ comment.score }</span>
+                    <span className="comment__score__value f-med" aria-live="polite">{ comment.score }</span>
                     <button
                         aria-label="decrease score"
                         className='comment__score__btn comment__score__btn--decrease'
