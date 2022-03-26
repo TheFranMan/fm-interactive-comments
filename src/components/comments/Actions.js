@@ -46,7 +46,7 @@ export default function Actions ({comment, editing, handleReplyLink, handleEditL
     let actionsClass = editing ? "actions is-editing" : "actions"
     return (
         <>
-            <ul className={ actionsClass } aria-label="actions">
+            <ul className={ actionsClass }>
                 { actions }
             </ul>
             { editingItems }
