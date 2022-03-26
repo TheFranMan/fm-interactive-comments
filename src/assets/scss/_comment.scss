@@ -94,6 +94,12 @@
                     justify-content: center;
                     align-items: center;
                 }
+
+                &:hover {
+                    svg path {
+                        fill: vars.$cl-primary;
+                    }
+                }
             }
         }
 
@@ -118,6 +124,10 @@
 
                     &--delete {
                         color: vars.$cl-alert;
+                    }
+
+                    &:hover {
+                        opacity: .6;
                     }
                 }
             }
@@ -187,6 +197,10 @@
         width: 104px;
         justify-self: end;
         @include button();
+
+        &:hover {
+            opacity: .6;
+        }
     }
 }
 

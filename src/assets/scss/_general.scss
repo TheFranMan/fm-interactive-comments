@@ -60,6 +60,12 @@ body {
     }
 }
 
+textarea,
+input[type="submit"],
+button:hover {
+    cursor: pointer;
+}
+
 @media (min-width: vars.$desktop) {
     body {
         #root {
