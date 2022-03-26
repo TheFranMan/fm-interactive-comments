@@ -9,7 +9,7 @@ export default function Actions ({comment, editing, handleReplyLink, handleEditL
 
     let actions = <li key='reply' className="actions__item">
                     <button className='actions__item__btn actions__item__btn--reply f-med' aria-controls={ `to-${ comment.id }` } onClick={() => handleReplyLink()}>
-                        <IconReply /><strong>Reply</strong>
+                        <IconReply />Reply
                     </button>
                   </li>
 
@@ -17,12 +17,12 @@ export default function Actions ({comment, editing, handleReplyLink, handleEditL
         actions = <>
                       <li key='delete' className="actions__item">
                           <button className='actions__item__btn actions__item__btn--delete f-med' disabled={ editing } onClick={() => handleDeleteLink() }>
-                              <IconDelete /><span><strong>Delete</strong></span>
+                              <IconDelete /><span>Delete</span>
                           </button>
                       </li>
                       <li key='edit' className="actions__item">
                           <button className='actions__item__btn actions__item__btn--edit f-med' disabled={ editing } onClick={ () => handleEditLink() }>
-                          <IconEdit /><strong>Edit</strong></button>
+                          <IconEdit />Edit</button>
                       </li>
                   </>
     }
@@ -32,12 +32,12 @@ export default function Actions ({comment, editing, handleReplyLink, handleEditL
         editingItems = <ul className="editing">
                         <li key='cancel' className="actions__item">
                             <button className='actions__item__btn actions__item__btn--cancel f-med' onClick={ () => handleCancel() }>
-                            <strong>Cancel</strong>
+                            Cancel
                             </button>
                         </li>
                         <li key='update' className="actions__item">
                             <button className='actions__item__btn actions__item__btn--update f-med' onClick={ () => handleUpdate() }>
-                            <strong>Update</strong>
+                            Update
                             </button>
                         </li>
                     </ul>

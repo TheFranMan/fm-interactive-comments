@@ -123,6 +123,7 @@
 
             &__item {
                 &__btn {
+                    font-family: inherit;
                     background-color: vars.$cl-bright;
                     color: vars.$cl-primary;
                     border: none;
