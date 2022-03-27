@@ -91,6 +91,9 @@ const Comment = ({comment, updateDeleteId}) => {
     //  } }></textarea>
     let replyingClass = showReply ? "replying" : ""
 
+    // The author cannot edit their own score.
+    let editScoreDisabled = isAuthor ? true : false
+
     return (
         <>
             <div className={ `comment comment-${comment.id} ${replyingClass}` }>
@@ -109,6 +112,7 @@ const Comment = ({comment, updateDeleteId}) => {
                  }
                 <div className='comment__score'>
                     <button
+                        disabled={ editScoreDisabled }
                         aria-label="increase score"
                         className='comment__score__btn comment__score__btn--increase'
                         onClick={() => dispatch({type: ACTIONS.SCORE.INCREASE, payload: {id: comment.id}})}>
@@ -116,6 +120,7 @@ const Comment = ({comment, updateDeleteId}) => {
                     </button>
                     <span className="comment__score__value f-med" aria-live="polite">{ comment.score }</span>
                     <button
+                        disabled={ editScoreDisabled }
                         aria-label="decrease score"
                         className='comment__score__btn comment__score__btn--decrease'
                         onClick={() => dispatch({type: ACTIONS.SCORE.DECREASE, payload: {id: comment.id}})}>
