@@ -12,7 +12,7 @@
 .comments {
     list-style-type: none;
 
-    ol {
+    &.main-thread > li > .reply-thread {
         padding-left: 8.8em;
         position: relative;
 
