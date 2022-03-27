@@ -62,7 +62,7 @@ body {
 
 textarea,
 input[type="submit"],
-button:hover {
+button:not([disabled]):hover {
     cursor: pointer;
 }
 
