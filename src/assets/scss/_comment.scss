@@ -13,18 +13,9 @@
     list-style-type: none;
 
     &.main-thread > li > .reply-thread {
-        padding-left: 8.8em;
+        padding-left: 1.6em;
+        border-left: 2px solid vars.$cl-accent-thick;
         position: relative;
-
-        &::before {
-            position: absolute;
-            content: "";
-            width: 2px;
-            height: 100%;
-            background-color:vars.$cl-accent-thick;
-            top: 0;
-            left: 4.4em;
-        }
     }
 
     .comment {
@@ -72,6 +63,7 @@
             grid-column: 1 / -1;
             color: vars.$cl-tertiary;
             line-height: 1.5;
+            margin-bottom: 1em;
         }
 
         textarea.comment__body {
@@ -290,6 +282,31 @@
         &__submit {
             grid-column: 3 / 4;
             align-self: start;
+        }
+    }
+}
+
+@media (min-width: vars.$desktop) {
+    .comments {
+        &.main-thread > li > .reply-thread {
+            padding-left: 8.8em;
+            border-left: none;
+
+            &::before {
+                position: absolute;
+                content: "";
+                width: 2px;
+                height: 100%;
+                background-color:vars.$cl-accent-thick;
+                top: 0;
+                left: 4.4em;
+            }
+        }
+
+        .comment {
+            &__body {
+                margin-bottom: 0;
+            }
         }
     }
 }
